@@ -14,7 +14,9 @@ def convertImage(path,toType,originalFileName):
                 originalFileName = originalFileName.split("\\")[-1]
             elif "/" in originalFileName:
                 originalFileName = originalFileName.split("/")[-1]
+            print(originalFileName)
             outPath = savePath + "/" + originalFileName[:-3] + toType
+            print(outPath)
             file.save(outPath)
             print("----------------------------------------------------------------------")
             print("File Saved")

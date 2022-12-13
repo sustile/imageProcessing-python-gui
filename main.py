@@ -63,7 +63,7 @@ def convertImage():
     png = customtkinter.CTkButton(master=convertImagesFrame, text="PNG",
                                               width=100,
                                               compound="right", fg_color=("#ddd", "gray25"), hover_color="#f72585",
-                                              text_font=("Roboto Mono", 10), corner_radius=20)
+                                              text_font=("Roboto Mono", 10), corner_radius=20,command=lambda : model.convertImage(imagePath, "png", originalFile))
     png.pack( ipadx=40, ipady=10, side=customtkinter.LEFT, padx=20)
 
     jpg = customtkinter.CTkButton(master=convertImagesFrame, text="JPG",
@@ -76,6 +76,7 @@ def convertImage():
 def ChangeImages():
     global imageObject, originalFile, imagePath
     file = filedialog.askopenfilename(title="Select an Image", filetypes=(("PNG", "*.png"), ("JPG", "*.jpg")))
+    if not file : return
     image = Image.open(file)
     originalFile = file
     imagePath = file
@@ -423,6 +424,7 @@ def saveFile():
     global  imagePath
     with Image.open(imagePath) as fileObj:
         savePath = tkinter.filedialog.askdirectory(title="Save Location")
+        if not savePath: return
         outPath = savePath + "/" + imagePath.split("/")[-1]
         fileObj.save(outPath)
         print("----------------------------------------------------------------------")
@@ -771,7 +773,7 @@ reduce_resFrame.grid(row=0, column = 1, ipadx = 20, ipady = 40)
 reduceResolution = customtkinter.CTkButton(master=reduce_resFrame, text="Reduce Resolution", width=100,
                                         compound="right",fg_color=("#ddd", "gray25"),hover_color="#f72585", text_font=("Roboto Mono", 15), corner_radius=20, command=reduceImages)
 reduceResolution.grid(row=0, column = 0,ipadx=10, ipady=10)
-reduceResSlider = customtkinter.CTkSlider(master=reduce_resFrame, from_=0, to=10,number_of_steps=1)
+reduceResSlider = customtkinter.CTkSlider(master=reduce_resFrame, from_=0, to=10,number_of_steps=10, progress_color="#f72585",button_color="#9b5de5")
 reduceResSlider.set(0)
 reduceResSlider.grid(row=1, column = 0)
 
@@ -811,7 +813,7 @@ boxBlurBtn = customtkinter.CTkButton(master=boxBlueFrame, text="Box Blur", width
                                         compound="right", fg_color=("#ddd", "gray25"),hover_color="#f72585", text_font=("Roboto Mono", 15), corner_radius=20,command=boxBlur)
 boxBlurBtn.grid(row=0, column = 0,ipadx=10, ipady=10)
 
-boxBlurSlider = customtkinter.CTkSlider(master=boxBlueFrame, from_=0, to=100, number_of_steps=1)
+boxBlurSlider = customtkinter.CTkSlider(master=boxBlueFrame, from_=0, to=100, number_of_steps=100, progress_color="#f72585",button_color="#9b5de5")
 boxBlurSlider.set(0)
 boxBlurSlider.grid(row=1, column = 0)
 
@@ -828,7 +830,7 @@ gaussianBlurFrame.grid(row=1, column = 4, ipadx = 20, ipady = 40)
 gaussianBlurBtn = customtkinter.CTkButton(master=gaussianBlurFrame, text="Gaussian Blur", width=100,
                                         compound="right", fg_color=("#ddd", "gray25"),hover_color="#f72585", text_font=("Roboto Mono", 15), corner_radius=20,command=gaussianBlur)
 gaussianBlurBtn.grid(row=0, column = 0,ipadx=10, ipady=10)
-gaussianBlurSlider = customtkinter.CTkSlider(master=gaussianBlurFrame, from_=0, to=100,number_of_steps=1)
+gaussianBlurSlider = customtkinter.CTkSlider(master=gaussianBlurFrame, from_=0, to=100,number_of_steps=100, progress_color="#f72585",button_color="#9b5de5")
 gaussianBlurSlider.set(0)
 gaussianBlurSlider.grid(row=1, column = 0)
 
@@ -848,7 +850,7 @@ brightnessBtn = customtkinter.CTkButton(master=brightnessBtnFrame, text="Brightn
                                         compound="right", fg_color=("#ddd", "gray25"),hover_color="#f72585", text_font=("Roboto Mono", 15), corner_radius=20,command=brightness)
 brightnessBtn.grid(row=0, column = 0,ipadx=10, ipady=10)
 
-brightnessBtnSlider = customtkinter.CTkSlider(master=brightnessBtnFrame, from_=1, to=10,number_of_steps=1)
+brightnessBtnSlider = customtkinter.CTkSlider(master=brightnessBtnFrame, from_=1, to=10,number_of_steps=10, progress_color="#f72585",button_color="#9b5de5")
 brightnessBtnSlider.set(1)
 brightnessBtnSlider.grid(row=1, column = 0)
 
@@ -862,7 +864,7 @@ contrastBtn = customtkinter.CTkButton(master=contrastBtnFrame, text="Contrast", 
                                         compound="right", fg_color=("#ddd", "gray25"),hover_color="#f72585", text_font=("Roboto Mono", 15), corner_radius=20, command=contrast)
 contrastBtn.grid(row=0, column = 0,ipadx=10, ipady=10)
 
-contrastBtnSlider = customtkinter.CTkSlider(master=contrastBtnFrame, from_=1, to=10,number_of_steps=1)
+contrastBtnSlider = customtkinter.CTkSlider(master=contrastBtnFrame, from_=1, to=10,number_of_steps=10, progress_color="#f72585",button_color="#9b5de5")
 contrastBtnSlider.set(1)
 contrastBtnSlider.grid(row=1, column = 0)
 
@@ -876,7 +878,7 @@ sharpnessBtn = customtkinter.CTkButton(master=sharpnessBtnFrame, text="Sharpness
                                         compound="right", fg_color=("#ddd", "gray25"),hover_color="#f72585", text_font=("Roboto Mono", 15), corner_radius=20, command=sharpness)
 sharpnessBtn.grid(row=0, column = 0,ipadx=10, ipady=10)
 
-sharpnessBtnSlider = customtkinter.CTkSlider(master=sharpnessBtnFrame, from_=1, to=20,number_of_steps=1)
+sharpnessBtnSlider = customtkinter.CTkSlider(master=sharpnessBtnFrame, from_=1, to=20,number_of_steps=20, progress_color="#f72585",button_color="#9b5de5")
 sharpnessBtnSlider.set(1)
 sharpnessBtnSlider.grid(row=1, column = 0)
 
@@ -890,7 +892,7 @@ colorBtn = customtkinter.CTkButton(master=colorBtnFrame, text="Color", width=100
                                         compound="right", fg_color=("#ddd", "gray25"),hover_color="#f72585", text_font=("Roboto Mono", 15), corner_radius=20,command=color)
 colorBtn.grid(row=0, column = 0,ipadx=10, ipady=10)
 
-colorBtnSlider = customtkinter.CTkSlider(master=colorBtnFrame, from_=1, to=10,number_of_steps=1)
+colorBtnSlider = customtkinter.CTkSlider(master=colorBtnFrame, from_=1, to=10,number_of_steps=10, progress_color="#f72585", button_color="#9b5de5")
 colorBtnSlider.set(1)
 colorBtnSlider.grid(row=1, column = 0)
 # FILTERS CONT BUTTONS
